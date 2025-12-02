@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Create Vote</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-700">
+<div class="max-w-6xl mx-auto py-8 px-4">
+    <nav class="flex items-center mb-6">
+        <ol class="flex items-center text-sm">
+            <li><a href="index.html" class="text-blue-600 hover:underline">Home</a></li>
+            <li class="mx-2">/</li>
+            <li class="font-semibold">Create Vote</li>
+        </ol>
+        <button id="save-draft-btn" class="ml-auto bg-gray-100 border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-200 transition">
+            Save Draft
+        </button>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-8">
+            <section class="border border-gray-200 rounded-xl p-6 bg-white">
+                <h3 class="text-xl font-semibold mb-4">Basic Information</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Vote Title</label>
+                        <input type="text" id="vote-title" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="e.g.: Please input vote title" maxlength="50"/>
+                        <p class="mt-1 text-sm text-gray-500">Use a clear and concise title, no more than 50 characters</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Vote Description</label>
+                        <textarea id="vote-description" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                  placeholder="Describe the purpose and background of the vote..." maxlength="500"></textarea>
+                        <p class="mt-1 text-sm text-gray-500"><span id="description-count">0</span>/500</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="border border-gray-200 rounded-xl p-6 bg-white">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold">Vote Options</h3>
+                    <button type="button" id="add-option-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center hover:bg-blue-700 transition">
+                        <iconify-icon icon="mdi:plus" class="text-xl mr-1"></iconify-icon>
+                        Add Option
+                    </button>
+                </div>
+                <div id="options-container" class="space-y-3">
+                </div>
+            </section>
+
+            <section class="border border-gray-200 rounded-xl p-6 bg-white">
+                <h3 class="text-xl font-semibold mb-4">Vote Settings</h3>
+                <div class="space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Vote Deadline</label>
+                            <p class="text-sm text-gray-500">Set the voting deadline date and time</p>
+                        </div>
+                        <input type="datetime-local" id="vote-deadline" class="mt-2 sm:mt-0 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"/>
+                    </div>
+                    <div class="flex items-center justify-between py-2">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Anonymous Vote</label>
+                            <p class="text-sm text-gray-500">Hide voter identity information</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="anonymous-vote" class="sr-only" checked/>
+                            <div class="w-12 h-6 bg-blue-600 rounded-full transition relative">
+                                <div class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition translate-x-6"></div>
+                            </div>
+                            <span class="ml-1 text-sm font-medium" id="anonymous-label">On</span>
+                        </label>
+                    </div>
+                    <div class="flex items-center justify-between py-2">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Allow Multiple Choice</label>
+                            <p class="text-sm text-gray-500">Participants can select multiple options</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="multiple-choice" class="sr-only"/>
+                            <div class="w-12 h-6 bg-gray-200 rounded-full transition relative">
+                                <div class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition"></div>
+                            </div>
+                            <span class="ml-1 text-sm font-medium" id="multiple-label">Off</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <section class="border border-gray-200 rounded-xl p-6 bg-white">
+                <h3 class="text-xl font-semibold mb-4">Permission Settings</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Vote Permission</label>
+                        <div class="flex flex-col sm:flex-row gap-4 mt-2">
+                            <label class="permission-option flex items-center cursor-pointer border-2 border-blue-500 rounded-lg px-4 py-3 bg-blue-50 transition">
+                                <input type="radio" name="permission" value="PUBLIC" class="sr-only" checked/>
+                                <iconify-icon icon="mdi:earth" class="text-blue-600 text-xl mr-2"></iconify-icon>
+                                <span class="font-medium">Public</span>
+                                <p class="ml-2 text-sm text-gray-500">Everyone can participate</p>
+                            </label>
+                            <label class="permission-option flex items-center cursor-pointer border-2 border-gray-300 rounded-lg px-4 py-3 hover:border-blue-500 transition">
+                                <input type="radio" name="permission" value="PRIVATE" class="sr-only"/>
+                                <iconify-icon icon="mdi:lock-outline" class="text-blue-600 text-xl mr-2"></iconify-icon>
+                                <span class="font-medium">Private</span>
+                                <p class="ml-2 text-sm text-gray-500">Only creator can see</p>
+                            </label>
+                            <label class="permission-option flex items-center cursor-pointer border-2 border-gray-300 rounded-lg px-4 py-3 hover:border-blue-500 transition">
+                                <input type="radio" name="permission" value="LINK_ONLY" class="sr-only"/>
+                                <iconify-icon icon="mdi:link-variant" class="text-blue-600 text-xl mr-2"></iconify-icon>
+                                <span class="font-medium">Link Only</span>
+                                <p class="ml-2 text-sm text-gray-500">Only via share link</p>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="flex justify-end gap-4 mt-8">
+                <button type="button" id="cancel-btn" class="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-100 transition">Cancel</button>
+                <button type="button" id="publish-btn" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">
+                    Publish Vote
+                </button>
+            </div>
+        </div>
+        <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 h-fit sticky top-8">
+            <h3 class="text-xl font-semibold mb-4">Vote Preview</h3>
+            <div class="border border-gray-200 rounded-lg p-6 bg-white">
+                <h4 class="text-lg font-semibold text-gray-800 mb-2">You are previewing:</h4>
+                <h3 id="preview-title" class="text-xl font-bold mb-4 text-gray-400">Enter vote title...</h3>
+                <p id="preview-description" class="text-gray-400 mb-6">Enter vote description...</p>
+                <div id="preview-options" class="space-y-4 mb-6">
+                    <p class="text-gray-400 text-sm">Add options to see preview</p>
+                </div>
+                <div class="flex justify-between text-sm text-gray-500 mb-4">
+                    <span id="preview-deadline">No deadline set</span>
+                    <span id="preview-type">Single Choice Vote</span>
+                </div>
+                <button class="w-full mt-6 bg-blue-600 text-white py-3 rounded-lg font-semibold opacity-50 cursor-not-allowed" disabled>Submit Vote</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="create-vote.js"></script>
+</body>
+</html>
+
