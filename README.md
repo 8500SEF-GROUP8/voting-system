@@ -1,6 +1,5 @@
 ## Features
 
-*   **User Authentication:** Secure user registration and login using JWT (JSON Web Tokens).
 *   **Vote Management:**
     *   Create new votes with a title, description, and multiple options.
     *   Edit votes while they are in a `DRAFT` status.
